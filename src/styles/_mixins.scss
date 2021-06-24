@@ -1,0 +1,19 @@
+@mixin media-query($size) {
+  @if $size == phone {
+    @media (min-device-width: 320px) {
+      @content;
+    }
+  } @else if $size == tablet {
+    @media (min-device-width: 568px) {
+      @content;
+    }
+  } @else if $size == desktop {
+    @media (min-width: 1200px) {
+      @content;
+    }
+  } @else if $size == big-desktop {
+    @media (min-width: 2501px) {
+      @content;
+    }
+  }
+}
