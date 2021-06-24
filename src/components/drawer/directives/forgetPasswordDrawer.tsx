@@ -7,18 +7,18 @@ interface ForgotPasswordDrawerProps {
     toggleDrawer: (props: boolean) => MouseEventHandler<HTMLDivElement> | undefined
 }
 
-const forgotPasswordDrawer = ({ classes, toggleDrawer }: ForgotPasswordDrawerProps) => (
-    <div
-        className={classes.content}
-        role="presentation"
-        onClick={toggleDrawer(false)}
-    >
-        <div className='forget-password-info layout-column align-center '>
-            <Typography style={{ fontWeight: 600, textAlign: "center" }}>Forgot Password?</Typography>
-            <Typography>We’ve sent you an email with a link to reset your password.</Typography>
-            <Button className={"btn-cta"} variant="contained" color="primary" disableElevation><b>Okay</b></Button>
+export default function forgotPasswordDrawer({ classes, toggleDrawer }: ForgotPasswordDrawerProps) {
+    return (
+        <div
+            className={classes.content}
+            role="presentation"
+            onClick={toggleDrawer(false)}
+        >
+            <div className='forget-password-info layout-column align-center '>
+                <Typography style={{ fontWeight: 600, textAlign: "center" }}>Forgot Password?</Typography>
+                <Typography>We’ve sent you an email with a link to reset your password.</Typography>
+                <Button className={"btn-cta"} variant="contained" color="primary" disableElevation><b>Okay</b></Button>
+            </div>
         </div>
-    </div>
-);
-
-export default forgotPasswordDrawer
+    )
+}

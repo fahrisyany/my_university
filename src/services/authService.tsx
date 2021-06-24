@@ -4,10 +4,7 @@ import useAPIService from '../services/apiService'
 import { useSnackbars } from "../components/CustomizedSnackbar"
 import { APIInterface, ResponseInterface } from '../interfaces/response.interface'
 
-const url = process.env.REACT_APP_API
 const authContext = createContext<any>([[], () => null]);;
-
-
 interface UserInterface {
     email: string;
     password: string;

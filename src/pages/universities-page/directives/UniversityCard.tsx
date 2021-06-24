@@ -1,11 +1,10 @@
-import React, { CSSProperties } from 'react';
+import React from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import CardActions from '@material-ui/core/CardActions';
-import { useHistory, useLocation } from "react-router-dom";
 import { UniversityInterface } from '../../../interfaces/university.interface';
 import { FixedSizeList as List, ListChildComponentProps } from 'react-window';
 import ListItem from '@material-ui/core/ListItem';
@@ -48,11 +47,9 @@ interface UniversityCardProps {
 }
 
 export default function UniversityCard({ data }: UniversityCardProps) {
-    console.log("🚀 ~ file: UniversityCard.tsx ~ line 47 ~ UniversityCard ~ data", data)
     const classes = useStyles();
-    const history = useHistory();
     const dimension = useWindowDimensions()
-    console.log("🚀 ~ file: UniversityCard.tsx ~ line 52 ~ UniversityCard ~ dimension", dimension)
+
     const renderRow = (props: ListChildComponentProps) => {
         const { index, style } = props;
         return (

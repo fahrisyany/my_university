@@ -12,14 +12,14 @@ interface FilterState {
     upcomingDue: string
 }
 
-interface FilterBillingDrawerProps {
+interface FilterUniversityDrawerProps {
     classes: any;
     values: FilterState;
     toggleDrawer: (props: boolean) => MouseEventHandler<HTMLFormElement> | undefined
     handleChange: (event: React.ChangeEvent<{ name?: string | undefined; value: unknown; }>) => void
 }
 
-const filterBillingDrawer = ({ classes, values, toggleDrawer, handleChange }: FilterBillingDrawerProps) => (
+const filterUniversityDrawer = ({ classes, values, toggleDrawer, handleChange }: FilterUniversityDrawerProps) => (
     <form
         className={classes.content}
         role="presentation"
@@ -98,4 +98,4 @@ const filterBillingDrawer = ({ classes, values, toggleDrawer, handleChange }: Fi
     </form>
 );
 
-export default filterBillingDrawer
+export default filterUniversityDrawer

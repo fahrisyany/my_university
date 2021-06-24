@@ -5,7 +5,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import TanyaiLogo from '../assets/logo/logo.png';
 import { useHistory, useLocation } from "react-router-dom";
 import { useAuth } from "../services/authService"
 import Button from '@material-ui/core/Button';

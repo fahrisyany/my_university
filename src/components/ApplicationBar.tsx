@@ -64,7 +64,7 @@ function ApplicationBar() {
             }
             menu.path === newLocationPath && setValue(menu.label)
         })
-    }, [location.pathname])
+    }, [location.pathname, publicRouting, privateRouting])
 
     return (
         <div className={classes.root}>

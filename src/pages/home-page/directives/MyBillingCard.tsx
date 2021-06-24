@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
         }
     }));
 
-interface BillingAnalyticsInterface {
+interface UniversityAnalyticsInterface {
     billing_paid: number;
     completed_billing_current_month: number
     completed_billing_current_week: number
@@ -52,19 +52,19 @@ interface BillingAnalyticsInterface {
     upcoming_billing_due: number
 }
 interface AnalyticsCardProps {
-    data: BillingAnalyticsInterface
+    data: UniversityAnalyticsInterface
 }
 
-export default function MyBillingCard({ data }: AnalyticsCardProps) {
+export default function MyUniversityCard({ data }: AnalyticsCardProps) {
     const classes = useStyles();
 
     return (
         <Card className={classes.root} variant="outlined">
             <CardContent className="layout-column">
-                <Typography className={classes.title} color="textSecondary" gutterBottom> My Billing </Typography>
+                <Typography className={classes.title} color="textSecondary" gutterBottom> My University </Typography>
                 <section className={`layout-row content-between ${classes.billingDetail}`}>
                     <div className={`layout-column align-center`}>
-                        <Typography variant="body2" component="p">Billing paid</Typography>
+                        <Typography variant="body2" component="p">University paid</Typography>
                         <Typography className={classes.count}> Rp {data.billing_paid}</Typography>
                     </div>
                     <Divider orientation="vertical" flexItem classes={{ root: classes.divider }} />

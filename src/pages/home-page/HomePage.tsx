@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Carousel from '../../components/Carousel'
 import image1 from "../../assets/carousel/carousel-1.jpg"
 import image2 from "../../assets/carousel/carousel-2.jpg"
-import AnalyticsCard from './directives/AnalyticsCard'
-import MyBillingCard from './directives/MyBillingCard'
+// import AnalyticsCard from './directives/AnalyticsCard'
+// import MyUniversityCard from './directives/MyUniversityCard'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import magentaCard from '../../assets/billing-card/magenta.jpg';
-import limeCard from '../../assets/billing-card/lime.jpg';
-import blueCard from '../../assets/billing-card/bue.jpg';
+// import magentaCard from '../../assets/billing-card/magenta.jpg';
+// import limeCard from '../../assets/billing-card/lime.jpg';
+// import blueCard from '../../assets/billing-card/bue.jpg';
 import Axios from 'axios';
-import useProvideBilling from '../../services/universityService';
-// import { BillingAnalyticsInterface } from '../../interfaces/university.interface';
+// import useProvideUniversity from '../../services/universityService';
+// import { UniversityAnalyticsInterface } from '../../interfaces/university.interface';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -23,10 +23,10 @@ const useStyles = makeStyles((theme: Theme) =>
     }));
 
 
-    export default function HomePage() {
+export default function HomePage() {
     const classes = useStyles()
-    // const { getBillingAnalytics } = useProvideBilling()
-    // const [state, setState] = useState<BillingAnalyticsInterface>({
+    // const { getUniversityAnalytics } = useProvideUniversity()
+    // const [state, setState] = useState<UniversityAnalyticsInterface>({
     //     billing_paid: 0,
     //     completed_billing_current_month: 0,
     //     completed_billing_current_week: 0,
@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme: Theme) =>
         let source = Axios.CancelToken.source()
         const loadData = async () => {
             // try {
-            //     let res: BillingAnalyticsInterface = await getBillingAnalytics(source)
+            //     let res: UniversityAnalyticsInterface = await getUniversityAnalytics(source)
             //     setState(res)
             // } catch (error) {
             //     if (Axios.isCancel(error)) {
@@ -71,25 +71,25 @@ const useStyles = makeStyles((theme: Theme) =>
 
     // const analyticsData = [
     //     {
-    //         title: "Total Billings",
+    //         title: "Total Universitys",
     //         subtTitle: "Last Updated : Monday, 15 April 2021",
     //         count: state.total_billing,
     //         bgImage: magentaCard
     //     },
     //     {
-    //         title: "Upcoming Billings Due",
+    //         title: "Upcoming Universitys Due",
     //         subtTitle: "Last Due Date : Monday, 15 April 2021",
     //         count: state.upcoming_billing_due,
     //         bgImage: magentaCard
     //     },
     //     {
-    //         title: "Completed Billings This Week",
+    //         title: "Completed Universitys This Week",
     //         subtTitle: "Last Payment : Monday, 15 April 2021",
     //         count: state.completed_billing_current_week,
     //         bgImage: limeCard
     //     },
     //     {
-    //         title: "Completed Billings This Month",
+    //         title: "Completed Universitys This Month",
     //         subtTitle: "Last Payment : Monday, 15 April 2021",
     //         count: state.completed_billing_current_month,
     //         bgImage: blueCard
@@ -100,7 +100,7 @@ const useStyles = makeStyles((theme: Theme) =>
         <div className={classes.root}>
             <Carousel imagesArray={images} />
             <section className={classes.content}>
-                {/* <MyBillingCard data={state} /> */}
+                {/* <MyUniversityCard data={state} /> */}
                 {/* <AnalyticsCard data={analyticsData} /> */}
             </section>
         </div>

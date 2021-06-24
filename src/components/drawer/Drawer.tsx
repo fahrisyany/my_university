@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import { useLocation } from 'react-router-dom';
-import filterBillingDrawer from './directives/filterBillingDrawer'
+import filterUniversityDrawer from './directives/filterUniversityDrawer'
 import forgotPasswordDrawer from './directives/forgetPasswordDrawer'
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         borderRadius: '24px 24px 0px 0px',
         padding: theme.spacing(4),
         textAlign: 'center',
-        maxWidth: "480px",
+        maxWidth: 480,
         margin: "auto",
     },
     drawerPaperFilter: {
@@ -21,9 +21,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     drawerIcon: {
         background: '#F2F2F2',
-        borderRadius: '4px',
-        width: '64px',
-        height: '6.48px',
+        borderRadius: 4,
+        width: 64,
+        height: 6.48,
         left: 0,
         right: 0,
         margin: '0 auto'
@@ -107,8 +107,8 @@ export function Drawer() {
 
     const renderDrawerContent = () => {
         switch (location.pathname) {
-            case "/billing":
-                return filterBillingDrawer({ classes, values, toggleDrawer, handleChange })
+            case "/universities":
+                return filterUniversityDrawer({ classes, values, toggleDrawer, handleChange })
             case "/auth/login":
                 return forgotPasswordDrawer({ classes, toggleDrawer })
             default:
@@ -118,7 +118,7 @@ export function Drawer() {
 
     const renderHeight = () => {
         switch (location.pathname) {
-            case "/billing":
+            case "/universities":
                 return classes.drawerPaperFilter
             case "/auth/login":
                 return classes.drawerPaperResetPassword

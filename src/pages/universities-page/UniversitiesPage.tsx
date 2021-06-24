@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import FilterBillingsInput from './directives/FilterInput'
-import BillingCard from './directives/UniversityCard'
-import { useHistory } from "react-router-dom";
-import useProvideBilling from '../../services/universityService';
-import Axios from 'axios';
+import FilterUniversitysInput from './directives/FilterInput'
+import UniversityCard from './directives/UniversityCard'
+import useProvideUniversity from '../../services/universityService';
+import Axios, { CancelTokenSource } from 'axios';
 import { UniversityInterface } from '../../interfaces/university.interface';
 import Loader from '../../components/Loader'
 
@@ -21,43 +20,44 @@ const useStyles = makeStyles((theme: Theme) =>
     }));
 
 
-function BillingPage() {
+function UniversityPage() {
     const classes = useStyles()
-    const history = useHistory();
-    const { getUniversities } = useProvideBilling()
+    const { getUniversities } = useProvideUniversity()
     const [state, setState] = useState<UniversityInterface[]>([])
+
+
 
     useEffect(() => {
         let source = Axios.CancelToken.source()
-        const loadData = async () => {
+        const loadData = async (source: CancelTokenSource) => {
             try {
                 let res: UniversityInterface[] = await getUniversities(source)
                 setState(res)
             } catch (error) {
                 if (Axios.isCancel(error)) {
-                    console.log('Cancel Call BillingPage.....');
+                    console.log('Cancel Call UniversityPage.....');
                 } else {
                     throw error
                 }
             }
         }
-        loadData()
+        loadData(source)
         return () => {
-            console.log('Unmounting BillingPage.....');
+            console.log('Unmounting UniversityPage.....');
             source.cancel()
         }
-    }, [])
+    }, [getUniversities])
 
     return (
         <div className={classes.root}>
-            <FilterBillingsInput />
+            <FilterUniversitysInput />
             <section className={`${classes.universityList} layout align-center`}>
                 {
-                    state.length === 0 ? <Loader /> : <BillingCard data={state} />
+                    state.length === 0 ? <Loader /> : <UniversityCard data={state} />
                 }
             </section>
         </div>
     );
 }
 
-export default BillingPage;
+export default UniversityPage;

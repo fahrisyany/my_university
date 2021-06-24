@@ -1,5 +1,4 @@
-import React, { Dispatch, MouseEventHandler, SetStateAction, useContext } from 'react';
-import Button from '@material-ui/core/Button';
+import React, { useContext } from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import { makeStyles, Theme } from '@material-ui/core/styles';
@@ -30,7 +29,6 @@ interface SnackbarContextInterface {
     setSnackbarState: (props: State) => any,
     handleClose: () => any,
 }
-
 
 const snackbarsContext = React.createContext<SnackbarContextInterface>(
     {
@@ -77,7 +75,7 @@ export function useSnackbars() {
 export function CustomizedSnackbars() {
     const classes = useStyles();
     const { snackbarState, handleClose } = useSnackbars()
-    
+
     return (
 
         <Snackbar className={classes.root} open={snackbarState.status} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical: "top", horizontal: "center" }}>

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';

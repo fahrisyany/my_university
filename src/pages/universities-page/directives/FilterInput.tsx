@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export default function FilterBillingsInput() {
+export default function FilterUniversitysInput() {
     const classes = useStyles();
     const { toggleDrawer } = useDrawer()
 
@@ -40,7 +40,7 @@ export default function FilterBillingsInput() {
         <Paper component="form" elevation={0} className={classes.root}>
             <InputBase
                 className={classes.input}
-                placeholder="Find Billings"
+                placeholder="Find Universitys"
                 id="filled-basic"
                 inputProps={{ 'aria-label': 'search google maps' }}
             />

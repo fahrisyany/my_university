@@ -79,19 +79,5 @@ export default function useAPIService(token: string) {
             })
     }
 
-    async function postMedia<T>(path: string, payload: any, source?: CancelTokenSource): Promise<T> {
-        let fd = new FormData();
-        fd.append('file', payload as string | Blob)
-        return service.post(`${url}${path}`, fd, { headers: { 'Content-Type': 'multipart/form-data' }, cancelToken: source && source.token })
-            .then((response: AxiosResponse<T>) => {
-                if (response.status >= 200 && response.status < 300) {
-                    return response.data;
-                }
-                throw new Error(response.status.toString());
-            }).catch((error: AxiosError) => {
-                throw error
-            })
-    }
-
-    return { get, post, postMedia, put }
+    return { get, post, put }
 }

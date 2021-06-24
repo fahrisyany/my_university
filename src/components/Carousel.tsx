@@ -65,7 +65,6 @@ export default function Carousel({ imagesArray }: CarouselProps) {
         const shouldResetIndex = index === lastIndex;
         const newIndex = shouldResetIndex ? 0 : index + 1;
         setIndex(newIndex)
-        // setDirection(true)
         setActiveStep(newIndex);
     }
     const previousSlide = (): void => {
@@ -73,7 +72,6 @@ export default function Carousel({ imagesArray }: CarouselProps) {
         const shouldResetIndex = index === 0;
         const newIndex = shouldResetIndex ? lastIndex : index - 1;
         setIndex(newIndex)
-        // setDirection(false)
         setActiveStep(newIndex);
     }
 

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import { routeService } from "../services/routeService"
@@ -37,13 +37,13 @@ export default function BottomNav() {
     const location = useLocation();
 
     useEffect(() => {
-        privateRouting.map((menu, index) => {
+        privateRouting.forEach((menu, index) => {
             let isSameBasePath = location.pathname.split('/').includes(menu.path.substring(1))
             if (isSameBasePath) {
                 setValue(index)
             }
         })
-    }, [location.pathname])
+    }, [location.pathname, privateRouting])
 
     return (
         <BottomNavigation value={value} onChange={(event, newValue) => { setValue(newValue) }} className={classes.root}>
