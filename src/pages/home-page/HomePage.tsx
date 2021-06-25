@@ -58,13 +58,13 @@ export default function HomePage() {
 
     const images = [
         {
-            title: "Promo bundle premium 3 bulan",
+            title: 'Lorem ipsum dolor sit amet consectetur.',
             subTitle: "Praesent lectus neque, iaculis et enim nec, consectetur pharetra turpis.",
             src: image1
         },
         {
-            title: "Promo bundle premium 2 bulan",
-            subTitle: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptas dicta! Nihil officia dolore numquam. Fugiat?.',
+            title: 'Lorem ipsum dolor sit amet consectetur rerum.',
+            subTitle: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugiat?.',
             src: image2
         }
     ]

@@ -12,7 +12,7 @@ import MenuList from '../../components/MenuList';
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            padding: theme.spacing(0, 4),
+            padding: theme.spacing(8, 4, 0),
             flex: 1,
         },
         list: {

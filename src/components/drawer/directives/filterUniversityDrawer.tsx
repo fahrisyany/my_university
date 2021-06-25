@@ -6,10 +6,10 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
 
 interface FilterState {
-    category: string,
-    dateAdded: string,
-    nominalRange: string,
-    upcomingDue: string
+    country: string,
+    state: string,
+    ranking: string,
+    tuition: string
 }
 
 interface FilterUniversityDrawerProps {
@@ -24,77 +24,74 @@ const filterUniversityDrawer = ({ classes, values, toggleDrawer, handleChange }:
         className={classes.content}
         role="presentation"
     >
-        <Typography style={{ fontWeight: 600, textAlign: "center" }}>Sort By</Typography>
+        <Typography style={{ fontWeight: 600, textAlign: "center" }}>Filter By</Typography>
 
         <FormControl variant="outlined">
-            <InputLabel htmlFor="outlined-age-native-simple">Category</InputLabel>
+            <InputLabel htmlFor="outlined-age-native-simple">Country</InputLabel>
             <Select
                 native
                 fullWidth
-                value={values.category}
+                disabled
+                value={values.country}
                 onChange={handleChange}
-                label="Category"
+                label="Country"
                 inputProps={{
-                    name: 'category',
+                    name: 'country',
                     id: 'outlined-age-native-simple',
                 }}
             >
                 <option aria-label="None" value="" />
-                <option value={'electricity'}>Electricity</option>
-                <option value={'water'}>water</option>
             </Select>
         </FormControl>
         <FormControl variant="outlined">
-            <InputLabel htmlFor="outlined-age-native-simple">Date Added</InputLabel>
+            <InputLabel htmlFor="outlined-age-native-simple">State</InputLabel>
             <Select
                 native
-                value={values.dateAdded}
+                value={values.state}
                 onChange={handleChange}
-                label="Date Added"
+                disabled
+                label="State"
                 inputProps={{
-                    name: 'dateAdded',
+                    name: 'state',
                     id: 'outlined-age-native-simple',
                 }}
             >
                 <option aria-label="None" value="" />
-                <option value={'latest'}>latest</option>
-                <option value={'newest'}>Newest</option>
             </Select>
         </FormControl>
         <FormControl variant="outlined">
-            <InputLabel htmlFor="outlined-age-native-simple">Nominal Range</InputLabel>
+            <InputLabel htmlFor="outlined-age-native-simple">University Ranking</InputLabel>
             <Select
                 native
-                value={values.nominalRange}
+                disabled
+                value={values.ranking}
                 onChange={handleChange}
-                label="Nominal Range"
+                label="University Ranking"
                 inputProps={{
-                    name: 'nominalRange',
+                    name: 'ranking',
                     id: 'outlined-age-native-simple',
                 }}
             >
                 <option aria-label="None" value="" />
-                <option value={'paid'}>Paid</option>
-                <option value={'not paid'}>Not paid</option>
             </Select>
         </FormControl>
         <FormControl variant="outlined">
-            <InputLabel htmlFor="outlined-age-native-simple">Upcoming Due</InputLabel>
+            <InputLabel htmlFor="outlined-age-native-simple">Tuition</InputLabel>
             <Select
                 native
-                value={values.upcomingDue}
+                disabled
+                value={values.tuition}
                 onChange={handleChange}
-                label="Upcoming Due"
+                label="Tuition"
                 inputProps={{
-                    name: 'upcomingDue',
+                    name: 'tuition',
                 }}
             >
                 <option aria-label="None" value="" />
-                <option value={'Sooner'}>Sooner</option>
-                <option value={'Later'}>Later</option>
             </Select>
         </FormControl>
-        <Button className={"btn-cta"} variant="contained" color="primary" disableElevation><b>Apply</b></Button>
+        <Typography variant="subtitle2">*Sort feature coming soon</Typography>
+        <Button disabled className={"btn-cta"} variant="contained" color="primary" disableElevation><b>Apply</b></Button>
     </form>
 );
 

@@ -6,16 +6,17 @@ import useProvideUniversity from '../../services/universityService';
 import Axios, { CancelTokenSource } from 'axios';
 import { UniversityInterface } from '../../interfaces/university.interface';
 import Loader from '../../components/Loader'
+import { useDebounce } from 'use-debounce';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            padding: theme.spacing(3, 4, 0),
+            padding: theme.spacing(8, 4, 0),
             flex: 1,
         },
         universityList: {
-            marginTop: theme.spacing(8),
-            margin: 'auto'
+            marginTop: theme.spacing(4),
+            margin: 'auto',
         },
     }));
 
@@ -23,16 +24,19 @@ const useStyles = makeStyles((theme: Theme) =>
 function UniversityPage() {
     const classes = useStyles()
     const { getUniversities } = useProvideUniversity()
-    const [state, setState] = useState<UniversityInterface[]>([])
-
-
+    const [universities, setuniversities] = useState<UniversityInterface[]>([])
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [query, setquery] = useState<string>("indonesia")
+    const [queryValue] = useDebounce(query, 800);
 
     useEffect(() => {
         let source = Axios.CancelToken.source()
+        setIsLoading(true)
         const loadData = async (source: CancelTokenSource) => {
             try {
-                let res: UniversityInterface[] = await getUniversities(source)
-                setState(res)
+                let res: UniversityInterface[] = await getUniversities(source, queryValue)
+                setIsLoading(false)
+                setuniversities(res)
             } catch (error) {
                 if (Axios.isCancel(error)) {
                     console.log('Cancel Call UniversityPage.....');
@@ -46,14 +50,14 @@ function UniversityPage() {
             console.log('Unmounting UniversityPage.....');
             source.cancel()
         }
-    }, [getUniversities])
+    }, [getUniversities, queryValue])
 
     return (
         <div className={classes.root}>
-            <FilterUniversitysInput />
+            <FilterUniversitysInput query={query} handleSetQuery={setquery} />
             <section className={`${classes.universityList} layout align-center`}>
                 {
-                    state.length === 0 ? <Loader /> : <UniversityCard data={state} />
+                    isLoading ? <Loader /> : <UniversityCard data={universities} />
                 }
             </section>
         </div>

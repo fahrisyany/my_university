@@ -16,12 +16,12 @@ const useStyles = makeStyles((theme: Theme) =>
         input: {
             flex: 1,
             backgroundColor: '#F6F6F6',
-            borderRadius: '5px',
+            borderRadius: 5,
             padding: theme.spacing(1, 4)
         },
         iconButton: {
             padding: 6,
-            borderRadius: '5px',
+            borderRadius: 5,
             color: "#ffff",
             backgroundColor: theme.palette.primary.main,
             marginLeft: theme.spacing(2),
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export default function FilterUniversitysInput() {
+export default function FilterUniversitysInput({ query, handleSetQuery }: { query: string, handleSetQuery: (props: string) => void }) {
     const classes = useStyles();
     const { toggleDrawer } = useDrawer()
 
@@ -40,9 +40,11 @@ export default function FilterUniversitysInput() {
         <Paper component="form" elevation={0} className={classes.root}>
             <InputBase
                 className={classes.input}
-                placeholder="Find Universitys"
+                placeholder="Search by country"
                 id="filled-basic"
                 inputProps={{ 'aria-label': 'search google maps' }}
+                value={query}
+                onChange={(e) => handleSetQuery(e.target.value)}
             />
             <IconButton color="primary" className={classes.iconButton} onClick={toggleDrawer(true)}>
                 <TuneIcon />

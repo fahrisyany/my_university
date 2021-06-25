@@ -57,10 +57,10 @@ interface DrawerContextInterface {
 }
 
 interface FilterState {
-    category: string,
-    dateAdded: string,
-    nominalRange: string,
-    upcomingDue: string
+    country: string,
+    state: string,
+    ranking: string,
+    tuition: string
 }
 
 const drawerContext = React.createContext<DrawerContextInterface>(
@@ -93,10 +93,10 @@ export function Drawer() {
     const location = useLocation();
     const { drawer, toggleDrawer } = useDrawer()
     const [values, setValues] = React.useState<FilterState>({
-        category: "",
-        dateAdded: "",
-        nominalRange: "",
-        upcomingDue: "",
+        country: "",
+        state: "",
+        ranking: "",
+        tuition: "",
     });
 
     const handleChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {

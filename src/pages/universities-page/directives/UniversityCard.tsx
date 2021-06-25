@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
         root: {
             borderTop: `solid 2px ${theme.palette.primary.main}`,
             borderBottom: `solid 4px ${theme.palette.primary.main}`,
+            padding: theme.spacing(4, 0, ),
         },
         listItem: {
             "&:hover": {
