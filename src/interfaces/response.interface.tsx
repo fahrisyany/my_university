@@ -1,5 +1,5 @@
 export interface ResponseInterface<T> {
-    code: number,
+    code?: number,
     data?: T[] | T | any,
     result?: T[] | T | any,
     message?: string,

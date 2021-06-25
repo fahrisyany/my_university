@@ -21,7 +21,7 @@ export function routeService() {
 
     const publicRouting: RoutesServiceInterface[] = [
         {
-            label: "Register",
+            label: "My University",
             path: `/auth/signup`,
             display: false,
             component: ({ classes }: AuthProps) => <SignUpForm classes={classes} />,

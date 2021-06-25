@@ -1,4 +1,3 @@
-// import { useSnackbars } from "../components/CustomizedSnackbar"
 import { useAuth } from './authService';
 import { CancelTokenSource } from 'axios';
 import { UniversityInterface } from '../interfaces/university.interface';
@@ -9,13 +8,11 @@ import { ResponseInterface } from '../interfaces/response.interface'
 
 
 export default function useProvideUniversity() {
-    // const { setSnackbarState } = useSnackbars()
     const UniversityUrl = process.env.REACT_APP_API_UNIV
     const Countryurl = process.env.REACT_APP_API_COUNTRY
     let auth = useAuth();
-    const token = auth.getToken();
+    const token = auth.currentUser
     const { get } = useAPIService(token)
-
 
     const getUniversities = useCallback(async (source: CancelTokenSource, query?: string): Promise<UniversityInterface[]> => {
         try {

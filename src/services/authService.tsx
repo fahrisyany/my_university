@@ -1,8 +1,7 @@
-import { useContext, createContext, useState } from "react";
+import { useContext, createContext, useState, useEffect } from "react";
 import { Redirect, Route } from "react-router-dom";
-import useAPIService from '../services/apiService'
-import { useSnackbars } from "../components/CustomizedSnackbar"
-import { APIInterface, ResponseInterface } from '../interfaces/response.interface'
+import { authFirebase } from '../firebase';
+
 
 const authContext = createContext<any>([[], () => null]);;
 interface UserInterface {
@@ -12,8 +11,6 @@ interface UserInterface {
 
 function useProvideAuth() {
     const [token, setToken] = useState<string>(localStorage.getItem('__token') || '');
-    const { post } = useAPIService(token)
-    const { setSnackbarState } = useSnackbars()
 
     const setUserToken = (userToken: string) => {
         localStorage.setItem('__token', userToken ? (userToken) : '');
@@ -27,36 +24,30 @@ function useProvideAuth() {
         return token
     }
 
-    const signin = async (payload: UserInterface, cb: () => void): Promise<void> => {
-        try {
-            let response: APIInterface<ResponseInterface<any>> = await post(`login`, payload)
-            const token = response.responses.token
-            setUserToken(token)
-            if (token) {
-                cb()
+    useEffect(() => {
+        const unsubscribe = authFirebase.onAuthStateChanged(user => {
+            if (user) {
+                setUserToken(JSON.stringify(user))
             }
-        } catch (error) {
-            setSnackbarState({ status: true, message: error.toString(), severity: "error" })
-            throw error
-        }
+        })
+        return unsubscribe
+    }, [])
+
+    const signin = async (payload: UserInterface) => {
+        const { email, password } = payload
+        return authFirebase.signInWithEmailAndPassword(email, password)
     }
 
-    const signup = async (payload: UserInterface, cb: () => void) => {
-        try {
-            let response: APIInterface<ResponseInterface<any>> = await post(`users`, payload)
-            if (response) {
-                cb()
-            }
-        } catch (error) {
-            setSnackbarState({ status: true, message: error.toString(), severity: "error" })
-            throw error
-        }
+    const signup = async (payload: UserInterface) => {
+        const { email, password } = payload
+        return authFirebase.createUserWithEmailAndPassword(email, password)
     }
 
-    const signout = (cb: () => void) => {
+
+    const signout = () => {
         localStorage.removeItem("__token")
         setToken('')
-        cb();
+        return authFirebase.signOut()
     };
 
     return {
@@ -64,7 +55,7 @@ function useProvideAuth() {
         signup,
         signout,
         setToken,
-        getToken
+        getToken,
     };
 }
 

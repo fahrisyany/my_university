@@ -104,9 +104,14 @@ export function SideNav() {
     const auth = useAuth();
     const { privateRouting } = routeService()
 
-    const handleSignout = () => {
-        auth.signout(() => history.push("/auth/login"))
-        toggleDrawer(false)
+    const handleSignout = async () => {
+        try {
+            await auth.signout()
+            toggleDrawer(false)
+            history.push("/auth/login")
+        } catch (error) {
+            throw error
+        }
     }
 
     const isCurrentRoute = (path: string) => {
