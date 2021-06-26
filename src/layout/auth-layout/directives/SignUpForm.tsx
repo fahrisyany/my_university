@@ -9,19 +9,9 @@ import { SchemaOf } from 'yup';
 import { useAuth } from "../../../services/authService"
 import { Link, useHistory } from 'react-router-dom';
 import { useSnackbars } from "../../../components/CustomizedSnackbar"
+import { UserInterface } from '../../../interfaces/authentication.interface';
 
-interface State {
-    email: string;
-    password: string;
-    retypePassword: string;
-}
-
-type User = {
-    email: string;
-    password: string
-};
-
-const validationSchema: SchemaOf<User> = yup.object({
+const validationSchema: SchemaOf<UserInterface> = yup.object({
     email: yup
         .string()
         .email('Enter a valid email')
@@ -44,13 +34,13 @@ export default function SignUp({ classes }: AuthProps) {
     const history = useHistory();
     const { setSnackbarState } = useSnackbars()
     const { from }: any = { from: { pathname: "/auth/login" } };
-    const [values] = React.useState<State>({
+    const [values] = React.useState<UserInterface>({
         email: 'fahrisyany@gmail.com',
         password: 'Masuk2311',
         retypePassword: 'Masuk2311',
     });
 
-    const handleSubmit = async (values: State): Promise<void> => {
+    const handleSubmit = async (values: UserInterface): Promise<void> => {
         try {
             await auth.signup(values)
             setSnackbarState({ status: true, message: "Registration success", severity: "success" })

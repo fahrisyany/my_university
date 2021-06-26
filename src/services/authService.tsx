@@ -1,16 +1,22 @@
 import { useContext, createContext, useState, useEffect } from "react";
 import { Redirect, Route } from "react-router-dom";
 import { authFirebase } from '../firebase';
-
+import { UserInterface } from '../interfaces/authentication.interface';
 
 const authContext = createContext<any>([[], () => null]);;
-interface UserInterface {
-    email: string;
-    password: string;
-}
+
 
 function useProvideAuth() {
     const [token, setToken] = useState<string>(localStorage.getItem('__token') || '');
+
+    useEffect(() => {
+        const unsubscribe = authFirebase.onAuthStateChanged(user => {
+            if (user) {
+                setUserToken(JSON.stringify(user))
+            }
+        })
+        return unsubscribe
+    }, [])
 
     const setUserToken = (userToken: string) => {
         localStorage.setItem('__token', userToken ? (userToken) : '');
@@ -23,15 +29,6 @@ function useProvideAuth() {
     const getToken = () => {
         return token
     }
-
-    useEffect(() => {
-        const unsubscribe = authFirebase.onAuthStateChanged(user => {
-            if (user) {
-                setUserToken(JSON.stringify(user))
-            }
-        })
-        return unsubscribe
-    }, [])
 
     const signin = async (payload: UserInterface) => {
         const { email, password } = payload
