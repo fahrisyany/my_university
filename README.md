@@ -10,11 +10,11 @@ This project is currently in development as it need to integrate with testing an
 
 #### Example:   
 
-https://i.imgur.com/c2BZgMt.png
+![Login page](https://i.imgur.com/c2BZgMt.png)
 
-https://imgur.com/VMXLXjk
+![Homepage](https://imgur.com/VMXLXjk)
 
-https://imgur.com/nl2rIrS
+![University list page](https://imgur.com/nl2rIrS)
 
 ## Installation and Setup Instructions
 
