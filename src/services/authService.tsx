@@ -3,7 +3,7 @@ import { Redirect, Route } from "react-router-dom";
 import { authFirebase, createUserDocument } from '../firebase';
 import { UserInterface } from '../interfaces/authentication.interface';
 import { UserCredential } from '@firebase/auth-types';
-import { useSnackbars } from './../components/CustomizedSnackbar';
+import { useSnackbars } from '../components/customSnackbar/CustomizedSnackbar';
 
 const authContext = createContext<any>([[], () => null]);;
 

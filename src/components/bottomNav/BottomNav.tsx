@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import { routeService } from "../services/routeService"
+import { routeService } from "../../services/routeService"
 import { Link, useLocation } from 'react-router-dom';
 
 const useStyles = makeStyles(() =>

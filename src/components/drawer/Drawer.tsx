@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface DrawerContextInterface {
     drawer: boolean,
-    toggleDrawer: (props: boolean) => any
+    toggleDrawer: (props: boolean | any) => any
 }
 
 interface FilterState {

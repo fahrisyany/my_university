@@ -14,7 +14,7 @@ import { useDrawer } from "../../../components/drawer/Drawer"
 import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from "../../../services/authService"
 
-interface State {
+interface SignInFormPropsInterface {
     email: string
     password: string;
     showPassword: boolean;
@@ -22,7 +22,7 @@ interface State {
 }
 
 export default function SignInForm({ classes }: AuthProps) {
-    const [values, setValues] = React.useState<State>({
+    const [values, setValues] = React.useState<SignInFormPropsInterface>({
         email: "fahrisyany@gmail.com",
         password: "Masuk2311",
         showPassword: false,
@@ -44,7 +44,7 @@ export default function SignInForm({ classes }: AuthProps) {
         event.preventDefault();
     };
 
-    const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const handleChange = (prop: keyof SignInFormPropsInterface) => (event: React.ChangeEvent<HTMLInputElement>): void => {
         setValues({ ...values, [prop]: event.target.value });
     };
 

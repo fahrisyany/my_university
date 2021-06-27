@@ -6,9 +6,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { useHistory, useLocation } from "react-router-dom";
-import { useAuth } from "../services/authService"
+import { useAuth } from "../../services/authService"
 import Button from '@material-ui/core/Button';
-import { routeService } from "../services/routeService"
+import { routeService } from "../../services/routeService"
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>

@@ -1,11 +1,11 @@
 import React from "react";
 import AuthPage from '../../layout/auth-layout/AuthLayout'
 import { makeStyles, createStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import ApplicationBar from '../../components/ApplicationBar'
+import ApplicationBar from '../../components/applicationBar/ApplicationBar'
 import { BrowserRouter as Router, Switch, Redirect } from "react-router-dom";
 import { Drawer, ProvideDrawer } from "../../components/drawer/Drawer"
-import { ProvideSideNav, SideNav } from "../../components/SideNav"
-import { ProvideSnackbar, CustomizedSnackbars } from "../../components/CustomizedSnackbar"
+import { ProvideSideNav, SideNav } from "../../components/sideNav/SideNav"
+import { ProvideSnackbar, CustomizedSnackbars } from "../../components/customSnackbar/CustomizedSnackbar"
 import { ProvideAuth, PrivateRoute, PublicRoute } from '../../services/authService'
 import MainLayout from '../../layout/main-layout/MainLayout'
 

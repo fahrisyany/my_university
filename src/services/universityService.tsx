@@ -6,7 +6,7 @@ import useAPIService from './apiService';
 import { useCallback } from 'react';
 import { ResponseInterface } from '../interfaces/response.interface'
 import { updateUserFavorites, getUserFavorites } from '../firebase'
-import { useSnackbars } from './../components/CustomizedSnackbar';
+import { useSnackbars } from '../components/customSnackbar/CustomizedSnackbar';
 
 export default function useProvideUniversity() {
     const UniversityUrl = process.env.REACT_APP_API_UNIV

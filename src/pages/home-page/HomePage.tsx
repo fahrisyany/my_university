@@ -1,14 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import Carousel from '../../components/Carousel'
+import Carousel from '../../components/carousel/Carousel'
 import image1 from "../../assets/carousel/carousel-1.jpg"
 import image2 from "../../assets/carousel/carousel-2.jpg"
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Axios from 'axios';
 import useProvideUniversity from '../../services/universityService';
 import { UniversityInterface } from '../../interfaces/university.interface';
-import Loader from '../../components/Loader'
+import Loader from '../../components/loader/Loader'
 import CustomCard from '../../components/card/Card'
 import { Typography } from '@material-ui/core';
+import InputButton from "../../components/inputButton/InputButton"
+import TelegramIcon from '@material-ui/icons/Telegram';
+import usersJson from "../../json/users.json";
+import * as yup from 'yup';
+import { SchemaOf } from 'yup';
+import { useFormik } from 'formik';
+
+interface SubscriberInterface {
+    email: string
+}
+const validationSchema: SchemaOf<SubscriberInterface> = yup.object({
+    email: yup
+        .string()
+        .email('Enter a valid email')
+        .required('Email is required'),
+});
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -19,19 +35,38 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing(4),
             margin: 'auto',
         },
+        form: {
+            padding: theme.spacing(4),
+            boxSizing: "border-box",
+            '& > *': {
+                width: '100%',
+            },
+        },
         title: {
             marginBottom: theme.spacing(4),
-            textAlign: 'left'
-        }
+            textAlign: 'left',
+            textDecoration: 'underline'
+        },
+        iconButton: {
+            padding: 6,
+            borderRadius: 5,
+            color: "#ffff",
+            backgroundColor: theme.palette.primary.main,
+            marginLeft: theme.spacing(2),
+            '&:hover': {
+                backgroundColor: theme.palette.primary.main
+            }
+        },
     }));
-
 
 export default function HomePage() {
     const classes = useStyles()
     const { getFromFavorites, toggleFavorites } = useProvideUniversity()
     const [universities, setuniversities] = useState<UniversityInterface[] | undefined>([])
+    const [values] = useState<SubscriberInterface>({
+        email: ""
+    })
     const [isLoading, setIsLoading] = useState<boolean>(false)
-
 
     useEffect(() => {
         let source = Axios.CancelToken.source()
@@ -48,7 +83,6 @@ export default function HomePage() {
                     throw error
                 }
             }
-
         }
         loadData()
         return () => {
@@ -68,7 +102,6 @@ export default function HomePage() {
         setuniversities(newUniversity)
     }
 
-
     const images = [
         {
             title: 'Lorem ipsum dolor sit amet consectetur.',
@@ -82,10 +115,46 @@ export default function HomePage() {
         }
     ]
 
+    const handleSubmitFake = () => (): void => {
+
+    };
+
+    const formik = useFormik({
+        initialValues: values,
+        validationSchema: validationSchema,
+        onSubmit: (values) => {
+            let newUsersJson = [...usersJson as any[], { email: values.email }]
+            const fileData = JSON.stringify(newUsersJson);
+            const blob = new Blob([fileData], { type: "text/plain" });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.download = `users.json`;
+            link.href = url;
+            link.click();
+        }
+    });
+
+
     return (
         <div className={classes.root}>
             <Carousel imagesArray={images} />
-            <section className={`${classes.content} layout-column content-center`}>
+            <form className={`${classes.form}`} onSubmit={formik.handleSubmit}>
+                <Typography className={classes.title} variant="h5">Our Newsletter:</Typography>
+                <Typography variant="subtitle2">
+                    Stay up to date on the latest university news, study tutorials, resources, and more. Delivered every Tuesday, for free.
+                </Typography>
+                <br />
+                <InputButton
+                    id="email"
+                    name="email"
+                    value={formik.values.email}
+                    handleOnChange={formik.handleChange}
+                    toggleAction={handleSubmitFake}
+                    icon={<TelegramIcon />}
+                    placeholder={'Confirm your email address'} />
+            </form>
+
+            <section className={`${classes.content}`}>
                 <Typography className={classes.title} variant="h5">Your Favorites:</Typography>
                 {
                     isLoading ? <Loader /> : universities?.map((data, i) => (<CustomCard key={i} data={universities as UniversityInterface[]} index={i} handleFavorite={handleFavorite} />))

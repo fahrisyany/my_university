@@ -3,7 +3,7 @@ import { useTransition, animated } from 'react-spring'
 import { useSwipeable } from "react-swipeable";
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import CarouselStepper from './CarouselStepper'
+import CarouselStepper from './directives/CarouselStepper'
 interface ImageInterface {
     title: string;
     subTitle: string;

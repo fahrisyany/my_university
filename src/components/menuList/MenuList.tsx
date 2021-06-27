@@ -45,7 +45,7 @@ export default function MenuList({ menuList }: MenuListProps) {
     const history = useHistory();
 
     return (
-        <List component="nav" className={classes.list} aria-label="contacts">
+        <List component="nav" className={classes.list}>
             {
                 menuList.map((menu: MenuListInterface, i: number) => (
                     <ListItem button onClick={(e) => history.push(menu.link)} key={i} disabled>

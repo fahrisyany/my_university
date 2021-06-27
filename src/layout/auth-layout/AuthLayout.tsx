@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
             '& .after-form': {
                 alignItems: 'baseline',
                 '& > *': {
-                    fontWeight: "600",
+                    fontWeight: 600,
                     fontSize: ".90em",
                 }
             },

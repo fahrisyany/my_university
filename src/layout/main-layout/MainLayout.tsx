@@ -1,7 +1,7 @@
 import React from 'react';
 import { routeService } from "../../services/routeService"
 import { Switch, Route } from "react-router-dom";
-import BottomNav from "../../components/BottomNav"
+import BottomNav from "../../components/bottomNav/BottomNav"
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() =>

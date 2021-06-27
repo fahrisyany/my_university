@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import FilterUniversitysInput from './directives/FilterInput'
 import UniversityCard from './directives/UniversityCard'
 import useProvideUniversity from '../../services/universityService';
 import Axios, { CancelTokenSource } from 'axios';
 import { UniversityInterface } from '../../interfaces/university.interface';
-import Loader from '../../components/Loader'
+import Loader from '../../components/loader/Loader'
 import { useDebounce } from 'use-debounce';
+import InputButton from "../../components/inputButton/InputButton"
+import TuneIcon from '@material-ui/icons/Tune';
+import { useDrawer } from "../../components/drawer/Drawer"
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -28,6 +30,7 @@ function UniversityPage() {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [query, setquery] = useState<string>("indonesia")
     const [queryValue] = useDebounce(query, 800);
+    const { toggleDrawer } = useDrawer()
 
     useEffect(() => {
         const source = Axios.CancelToken.source()
@@ -73,9 +76,13 @@ function UniversityPage() {
         setuniversities(newUniversity)
     }
 
+    const handleOnChange = (e: any) => {
+        setquery(e.target.value)
+    }
+
     return (
         <div className={classes.root}>
-            <FilterUniversitysInput query={query} handleSetQuery={setquery} />
+            <InputButton value={query} toggleAction={toggleDrawer} handleOnChange={handleOnChange} icon={<TuneIcon />} placeholder={'Search country'} />
             <section className={`${classes.universityList} layout align-center`}>
                 {
                     isLoading ? <Loader /> : <UniversityCard data={universities} handleFavorite={handleFavorite} />

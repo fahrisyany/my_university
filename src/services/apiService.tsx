@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse, CancelTokenSource } from 'axios';
 import { useAuth } from './authService'
 import { useHistory } from "react-router-dom";
-import { useSnackbars } from "../components/CustomizedSnackbar"
+import { useSnackbars } from "../components/customSnackbar/CustomizedSnackbar"
 
 export default function useAPIService(token: string) {
     const url = process.env.REACT_APP_API
