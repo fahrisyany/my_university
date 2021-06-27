@@ -15,6 +15,7 @@ import usersJson from "../../json/users.json";
 import * as yup from 'yup';
 import { SchemaOf } from 'yup';
 import { useFormik } from 'formik';
+import { useSnackbars } from '../../components/customSnackbar/CustomizedSnackbar';
 
 interface SubscriberInterface {
     email: string
@@ -43,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
             },
         },
         title: {
-            marginBottom: theme.spacing(4),
+            padding: theme.spacing(4, 4, 0, 4),
             textAlign: 'left',
             textDecoration: 'underline'
         },
@@ -63,10 +64,11 @@ export default function HomePage() {
     const classes = useStyles()
     const { getFromFavorites, toggleFavorites } = useProvideUniversity()
     const [universities, setuniversities] = useState<UniversityInterface[] | undefined>([])
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const { setSnackbarState } = useSnackbars()
     const [values] = useState<SubscriberInterface>({
         email: ""
     })
-    const [isLoading, setIsLoading] = useState<boolean>(false)
 
     useEffect(() => {
         let source = Axios.CancelToken.source()
@@ -131,6 +133,8 @@ export default function HomePage() {
             link.download = `users.json`;
             link.href = url;
             link.click();
+            setSnackbarState({ status: true, message: "Thank you, we'll keep you up to date", severity: "success" })
+
         }
     });
 
@@ -138,8 +142,8 @@ export default function HomePage() {
     return (
         <div className={classes.root}>
             <Carousel imagesArray={images} />
+            <Typography className={classes.title} variant="h5">Our Newsletter:</Typography>
             <form className={`${classes.form}`} onSubmit={formik.handleSubmit}>
-                <Typography className={classes.title} variant="h5">Our Newsletter:</Typography>
                 <Typography variant="subtitle2">
                     Stay up to date on the latest university news, study tutorials, resources, and more. Delivered every Tuesday, for free.
                 </Typography>
@@ -154,8 +158,8 @@ export default function HomePage() {
                     placeholder={'Confirm your email address'} />
             </form>
 
-            <section className={`${classes.content}`}>
-                <Typography className={classes.title} variant="h5">Your Favorites:</Typography>
+            <Typography className={classes.title} variant="h5">Your Favorites:</Typography>
+            <section className={`${classes.content} layout-column content-center`}>
                 {
                     isLoading ? <Loader /> : universities?.map((data, i) => (<CustomCard key={i} data={universities as UniversityInterface[]} index={i} handleFavorite={handleFavorite} />))
                 }

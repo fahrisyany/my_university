@@ -23,8 +23,8 @@ interface SignInFormPropsInterface {
 
 export default function SignInForm({ classes }: AuthProps) {
     const [values, setValues] = React.useState<SignInFormPropsInterface>({
-        email: "fahrisyany@gmail.com",
-        password: "Masuk2311",
+        email: "",
+        password: "",
         showPassword: false,
         anchor: false
     });

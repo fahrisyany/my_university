@@ -33,9 +33,9 @@ export default function SignUp({ classes }: AuthProps) {
     const history = useHistory();
     const { from }: any = { from: { pathname: "/auth/login" } };
     const [values] = React.useState<UserInterface>({
-        email: 'fahrisyany@gmail.com',
-        password: 'Masuk2311',
-        retypePassword: 'Masuk2311',
+        email: '',
+        password: '',
+        retypePassword: '',
     });
 
     const handleSubmit = async (values: UserInterface): Promise<void> => {
