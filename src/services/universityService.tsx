@@ -1,26 +1,24 @@
 import { useAuth } from './authService';
-import { CancelTokenSource } from 'axios';
 import { UniversityInterface } from '../interfaces/university.interface';
-import { CountryInterface } from '../interfaces/country.interface';
-import useAPIService from './apiService';
 import { useCallback } from 'react';
-import { ResponseInterface } from '../interfaces/response.interface'
 import { updateUserFavorites, getUserFavorites } from '../firebase'
 import { useSnackbars } from '../components/customSnackbar/CustomizedSnackbar';
+import axios, { AxiosResponse, CancelTokenSource } from 'axios';
 
 export default function useProvideUniversity() {
     const UniversityUrl = process.env.REACT_APP_API_UNIV
-    const Countryurl = process.env.REACT_APP_API_COUNTRY
     const auth = useAuth();
     const token = auth.getToken();
-    const { get } = useAPIService(token)
     const { setSnackbarState } = useSnackbars()
 
     const getUniversities = useCallback(async (source: CancelTokenSource, query?: string): Promise<UniversityInterface[]> => {
 
         try {
-            const response: UniversityInterface[] = await get(`/search?country=${query}`, UniversityUrl, source)
-            return response
+            const response: AxiosResponse<UniversityInterface[]> = await axios.get(`${UniversityUrl}/search?country=${query}`, { cancelToken: source && source.token })
+            if (response.status >= 200 && response.status < 300) {
+                return response.data;
+            }
+            throw new Error(response.status.toString());
         } catch (error) {
             throw error
         }
@@ -55,20 +53,8 @@ export default function useProvideUniversity() {
         }
     }, [token, setSnackbarState])
 
-    const getCountries = useCallback(async (source: CancelTokenSource): Promise<CountryInterface[]> => {
-        try {
-            const response: ResponseInterface<CountryInterface[]> = await get(`countries`, Countryurl, source)
-            const { result } = response
-            return result
-        } catch (error) {
-            throw error
-        }
-    }, [Countryurl])
-
-
     return {
         getUniversities,
-        getCountries,
         toggleFavorites,
         getFromFavorites
     };
