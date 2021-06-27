@@ -8,13 +8,11 @@ This project is currently in development as it need to integrate with testing an
 
 ## Project Screen Shot(s)
 
-#### Example:   
-
 ![Login page](https://i.imgur.com/c2BZgMt.png)
 
-![Homepage](https://imgur.com/VMXLXjk)
+![Homepage](https://i.imgur.com/VMXLXjk.png)
 
-![University list page](https://imgur.com/nl2rIrS)
+![University list page](https://i.imgur.com/nl2rIrS.png)
 
 ## Installation and Setup Instructions
 
