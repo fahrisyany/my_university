@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 interface MenuListInterface {
-    icon: any;
+    icon: ReactElement<any, any>;
     label: string;
     link: string
 }

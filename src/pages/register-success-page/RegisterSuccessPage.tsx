@@ -1,5 +1,4 @@
 import React from 'react';
-import ImageIncoming from '../../assets/image/image-upcoming.png';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
@@ -20,7 +19,6 @@ export default function RegisterSuccessPage() {
 
     return (
         <div className={classes.root}>
-            <img src={ImageIncoming} alt="incoming-email" />
             <br />
             <br />
             <Typography variant="h6" component="h1">Confirm your accont with email</Typography>

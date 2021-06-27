@@ -125,7 +125,7 @@ export default function HomePage() {
         initialValues: values,
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            let newUsersJson = [...usersJson as any[], { email: values.email }]
+            const newUsersJson = [...usersJson as any[], { email: values.email }]
             const fileData = JSON.stringify(newUsersJson);
             const blob = new Blob([fileData], { type: "text/plain" });
             const url = URL.createObjectURL(blob);
