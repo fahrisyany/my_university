@@ -1,7 +1,6 @@
 import React from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import ProfileInfo from './directives/ProfileInfo';
-import PremiumStatus from './directives/PremiumStatus';
 import Divider from '@material-ui/core/Divider';
 import PersonIcon from '@material-ui/icons/Person';
 import StarsIcon from '@material-ui/icons/Stars';
@@ -72,7 +71,6 @@ export default function ProfilePage() {
         <div className={classes.root}>
             <ProfileInfo />
             <Divider className={classes.divider} variant="middle" />
-            <PremiumStatus />
             <MenuList menuList={menuList} />
         </div>
     );

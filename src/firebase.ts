@@ -21,7 +21,7 @@ export const firestore = firebase.firestore();
 
 export const createUserDocument = async (user: UserInfo) => {
   if (await !user) return;
-  const userRef = firestore.doc(`users/${user.uid}`);
+  const userRef = firestore.collection(`users`).doc(user.uid);
   const snapshot = await userRef.get();
   if (!snapshot.exists) {
     const { email } = user;
@@ -41,8 +41,8 @@ export const createUserDocument = async (user: UserInfo) => {
 export const updateUserFavorites = async (
   uid: string,
   payload: UniversityInterface,
-  isFavorite: boolean
 ) => {
+  const { isFavorite } = payload
   if (await !uid) return;
   const userFavoritesRef = firestore.collection(`users`).doc(uid);
   const FieldValue = firebase.firestore.FieldValue
@@ -57,14 +57,15 @@ export const updateUserFavorites = async (
   }
 };
 
-export const getUserFavorites = async (uid: string) => {
-  if (await !uid) return;
+export const getUserFavorites = async (uid: string):Promise<UniversityInterface[]> => {
+  if (await !uid) return [];
   const userFavoritesRef = firestore.collection(`users`).doc(uid);
-  const doc: any = await userFavoritesRef.get();
+  const doc: firebase.firestore.DocumentSnapshot = await userFavoritesRef.get()
   if (doc.exists) {
-    const favorites = doc.data().favorites;
-    return favorites;
+    const favorites = doc?.data()?.favorites;
+    console.log("🚀 ~ file: firebase.ts ~ line 66 ~ getUserFavorites ~ favorites", favorites)
+    return favorites as UniversityInterface[] || [];
   } else {
-    return;
+    return [];
   }
 };

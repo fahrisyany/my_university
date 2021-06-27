@@ -1,16 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Carousel from '../../components/Carousel'
 import image1 from "../../assets/carousel/carousel-1.jpg"
 import image2 from "../../assets/carousel/carousel-2.jpg"
-// import AnalyticsCard from './directives/AnalyticsCard'
-// import MyUniversityCard from './directives/MyUniversityCard'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-// import magentaCard from '../../assets/billing-card/magenta.jpg';
-// import limeCard from '../../assets/billing-card/lime.jpg';
-// import blueCard from '../../assets/billing-card/bue.jpg';
 import Axios from 'axios';
-// import useProvideUniversity from '../../services/universityService';
-// import { UniversityAnalyticsInterface } from '../../interfaces/university.interface';
+import useProvideUniversity from '../../services/universityService';
+import { UniversityInterface } from '../../interfaces/university.interface';
+import Loader from '../../components/Loader'
+import CustomCard from '../../components/card/Card'
+import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -19,42 +17,57 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         content: {
             padding: theme.spacing(4),
+            margin: 'auto',
+        },
+        title: {
+            marginBottom: theme.spacing(4),
+            textAlign: 'left'
         }
     }));
 
 
 export default function HomePage() {
     const classes = useStyles()
-    // const { getUniversityAnalytics } = useProvideUniversity()
-    // const [state, setState] = useState<UniversityAnalyticsInterface>({
-    //     billing_paid: 0,
-    //     completed_billing_current_month: 0,
-    //     completed_billing_current_week: 0,
-    //     rest_of_billing: 0,
-    //     total_billing: 0,
-    //     upcoming_billing_due: 0
-    // })
+    const { getFromFavorites, toggleFavorites } = useProvideUniversity()
+    const [universities, setuniversities] = useState<UniversityInterface[] | undefined>([])
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+
 
     useEffect(() => {
         let source = Axios.CancelToken.source()
         const loadData = async () => {
-            // try {
-            //     let res: UniversityAnalyticsInterface = await getUniversityAnalytics(source)
-            //     setState(res)
-            // } catch (error) {
-            //     if (Axios.isCancel(error)) {
-            //         console.log('Cancel Call HomePage.....');
-            //     } else {
-            //         throw error
-            //     }
-            // }
+            setIsLoading(true)
+            try {
+                const universities: UniversityInterface[] | undefined = await getFromFavorites()
+                setIsLoading(false)
+                setuniversities(universities)
+            } catch (error) {
+                if (Axios.isCancel(error)) {
+                    console.log('Cancel Call UniversityPage.....');
+                } else {
+                    throw error
+                }
+            }
+
         }
         loadData()
         return () => {
             console.log('Unmounting HomePage.....');
             source.cancel()
         }
-    }, [])
+    }, [getFromFavorites])
+
+    const handleFavorite = (data: UniversityInterface) => {
+        const newUniversity = universities?.map((uni) => {
+            if (uni.name === data.name) {
+                return ({ ...uni, isFavorite: !data.isFavorite })
+            }
+            return uni
+        })
+        toggleFavorites({ ...data, isFavorite: !data.isFavorite })
+        setuniversities(newUniversity)
+    }
+
 
     const images = [
         {
@@ -69,39 +82,14 @@ export default function HomePage() {
         }
     ]
 
-    // const analyticsData = [
-    //     {
-    //         title: "Total Universitys",
-    //         subtTitle: "Last Updated : Monday, 15 April 2021",
-    //         count: state.total_billing,
-    //         bgImage: magentaCard
-    //     },
-    //     {
-    //         title: "Upcoming Universitys Due",
-    //         subtTitle: "Last Due Date : Monday, 15 April 2021",
-    //         count: state.upcoming_billing_due,
-    //         bgImage: magentaCard
-    //     },
-    //     {
-    //         title: "Completed Universitys This Week",
-    //         subtTitle: "Last Payment : Monday, 15 April 2021",
-    //         count: state.completed_billing_current_week,
-    //         bgImage: limeCard
-    //     },
-    //     {
-    //         title: "Completed Universitys This Month",
-    //         subtTitle: "Last Payment : Monday, 15 April 2021",
-    //         count: state.completed_billing_current_month,
-    //         bgImage: blueCard
-    //     }
-    // ]
-
     return (
         <div className={classes.root}>
             <Carousel imagesArray={images} />
-            <section className={classes.content}>
-                {/* <MyUniversityCard data={state} /> */}
-                {/* <AnalyticsCard data={analyticsData} /> */}
+            <section className={`${classes.content} layout-column content-center`}>
+                <Typography className={classes.title} variant="h5">Your Favorites:</Typography>
+                {
+                    isLoading ? <Loader /> : universities?.map((data, i) => (<CustomCard key={i} data={universities as UniversityInterface[]} index={i} handleFavorite={handleFavorite} />))
+                }
             </section>
         </div>
     );

@@ -48,7 +48,7 @@ export default function MenuList({ menuList }: MenuListProps) {
         <List component="nav" className={classes.list} aria-label="contacts">
             {
                 menuList.map((menu: MenuListInterface, i: number) => (
-                    <ListItem button onClick={(e) => history.push(menu.link)} key={i}>
+                    <ListItem button onClick={(e) => history.push(menu.link)} key={i} disabled>
                         <ListItemIcon>
                             {menu.icon}
                         </ListItemIcon>

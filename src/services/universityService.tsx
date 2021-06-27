@@ -11,7 +11,7 @@ import { useSnackbars } from './../components/CustomizedSnackbar';
 export default function useProvideUniversity() {
     const UniversityUrl = process.env.REACT_APP_API_UNIV
     const Countryurl = process.env.REACT_APP_API_COUNTRY
-    let auth = useAuth();
+    const auth = useAuth();
     const token = auth.getToken();
     const { get } = useAPIService(token)
     const { setSnackbarState } = useSnackbars()
@@ -27,35 +27,33 @@ export default function useProvideUniversity() {
     }, [UniversityUrl])
 
 
-    const toggleFavorites = async (payload: UniversityInterface, isFavorite: boolean) => {
+    const toggleFavorites = async (payload: UniversityInterface) => {
         const parsedToken = JSON.parse(token)
+        const { isFavorite } = payload
         try {
-            await updateUserFavorites(parsedToken.uid, payload, isFavorite)
+            await updateUserFavorites(parsedToken.uid, payload)
             const successMessage = !isFavorite ? "Removed from favorites" : "Added to favorites"
             setSnackbarState({ status: true, message: successMessage, severity: "success" })
-
         } catch (error) {
             setSnackbarState({ status: true, message: error.message, severity: "error" })
             if (error instanceof TypeError) {
                 throw error
             }
         }
-
     }
 
-    const getFromFavorites = async () => {
+    const getFromFavorites = useCallback(async (): Promise<UniversityInterface[] | undefined> => {
         const parsedToken = JSON.parse(token)
         try {
-            let response: Promise<UniversityInterface[]> = await getUserFavorites(parsedToken.uid)
-            return response
+            const response: UniversityInterface[] = await getUserFavorites(parsedToken.uid)
+            return response as UniversityInterface[]
         } catch (error) {
             setSnackbarState({ status: true, message: error.message, severity: "error" })
             if (error instanceof TypeError) {
                 throw error
             }
         }
-
-    }
+    }, [token, setSnackbarState])
 
     const getCountries = useCallback(async (source: CancelTokenSource): Promise<CountryInterface[]> => {
         try {

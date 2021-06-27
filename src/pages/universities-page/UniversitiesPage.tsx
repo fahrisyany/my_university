@@ -60,13 +60,17 @@ function UniversityPage() {
             console.log('Unmounting UniversityPage.....');
             source.cancel()
         }
-    }, [getUniversities, queryValue])
+    }, [getUniversities, queryValue, getFromFavorites])
 
     const handleFavorite = (data: UniversityInterface) => {
-        let newUniversity = data
-        newUniversity.isFavorite = !data.isFavorite
-        toggleFavorites(newUniversity, newUniversity.isFavorite)
-        setuniversities([...universities, newUniversity])
+        const newUniversity = universities?.map((uni) => {
+            if (uni.name === data.name) {
+                return ({ ...uni, isFavorite: !data.isFavorite })
+            }
+            return uni
+        })
+        toggleFavorites({ ...data, isFavorite: !data.isFavorite })
+        setuniversities(newUniversity)
     }
 
     return (
