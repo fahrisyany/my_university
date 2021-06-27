@@ -9,13 +9,15 @@ import { UniversityInterface } from '../../../interfaces/university.interface';
 import { FixedSizeList as List, ListChildComponentProps } from 'react-window';
 import ListItem from '@material-ui/core/ListItem';
 import useWindowDimensions from '../../../helpers/getDimensions';
+import IconButton from '@material-ui/core/IconButton';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             borderTop: `solid 2px ${theme.palette.primary.main}`,
             borderBottom: `solid 4px ${theme.palette.primary.main}`,
-            padding: theme.spacing(4, 0, ),
+            padding: theme.spacing(4, 0,),
         },
         listItem: {
             "&:hover": {
@@ -25,7 +27,8 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         card: {
             width: '100%',
-            minHeight: 140,
+            // minHeight: 140,
+            // maxHeight: 180,
             backgroundColor: theme.palette.background.paper,
             boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;",
             border: 'none',
@@ -39,15 +42,19 @@ const useStyles = makeStyles((theme: Theme) =>
         pos: {
             marginBottom: 12,
         },
+        favIcon: {
+            color: 'red'
+        }
     }),
 );
 
 
 interface UniversityCardProps {
     data: UniversityInterface[]
+    handleFavorite: (university: UniversityInterface) => void
 }
 
-export default function UniversityCard({ data }: UniversityCardProps) {
+export default function UniversityCard({ data, handleFavorite }: UniversityCardProps) {
     const classes = useStyles();
     const dimension = useWindowDimensions()
 
@@ -68,6 +75,9 @@ export default function UniversityCard({ data }: UniversityCardProps) {
                         </Typography>
                     </CardContent>
                     <CardActions>
+                        <IconButton aria-label="add to favorites" onClick={() => handleFavorite(data[index])}>
+                            <FavoriteIcon className={data[index].isFavorite ? classes.favIcon : ""} />
+                        </IconButton>
                         <Button size="small">Learn More</Button>
                     </CardActions>
                 </Card>
@@ -77,7 +87,7 @@ export default function UniversityCard({ data }: UniversityCardProps) {
 
     return (
 
-        <List className={classes.root} height={dimension.height / 1.45} width={"100%"} itemSize={190} itemCount={data.length}>
+        <List className={classes.root} height={dimension.height / 1.45} width={"100%"} itemSize={200} itemCount={data.length}>
             {renderRow}
         </List>
     );

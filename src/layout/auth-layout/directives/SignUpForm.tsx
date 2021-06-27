@@ -8,7 +8,6 @@ import * as yup from 'yup';
 import { SchemaOf } from 'yup';
 import { useAuth } from "../../../services/authService"
 import { Link, useHistory } from 'react-router-dom';
-import { useSnackbars } from "../../../components/CustomizedSnackbar"
 import { UserInterface } from '../../../interfaces/authentication.interface';
 
 const validationSchema: SchemaOf<UserInterface> = yup.object({
@@ -32,7 +31,6 @@ const validationSchema: SchemaOf<UserInterface> = yup.object({
 export default function SignUp({ classes }: AuthProps) {
     const auth = useAuth();
     const history = useHistory();
-    const { setSnackbarState } = useSnackbars()
     const { from }: any = { from: { pathname: "/auth/login" } };
     const [values] = React.useState<UserInterface>({
         email: 'fahrisyany@gmail.com',
@@ -41,15 +39,7 @@ export default function SignUp({ classes }: AuthProps) {
     });
 
     const handleSubmit = async (values: UserInterface): Promise<void> => {
-        try {
-            await auth.signup(values)
-            setSnackbarState({ status: true, message: "Registration success", severity: "success" })
-            history.replace(from)
-        } catch (error) {
-            setSnackbarState({ status: true, message: "Oops, failed to create an account", severity: "error" })
-            throw error
-        }
-
+        auth.signup(values, () => history.replace(from))
     }
 
     const formik = useFormik({

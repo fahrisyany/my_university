@@ -13,7 +13,6 @@ import InputLabel from '@material-ui/core/InputLabel';
 import { useDrawer } from "../../../components/drawer/Drawer"
 import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from "../../../services/authService"
-import { useSnackbars } from '../../../components/CustomizedSnackbar';
 
 interface State {
     email: string
@@ -34,7 +33,6 @@ export default function SignInForm({ classes }: AuthProps) {
     const history = useHistory();
     const auth = useAuth();
     const { from }: any = { from: { pathname: "/home" } };
-    const { setSnackbarState } = useSnackbars()
 
     const preventDefault = (event: React.SyntheticEvent) => event.preventDefault();
 
@@ -50,16 +48,9 @@ export default function SignInForm({ classes }: AuthProps) {
         setValues({ ...values, [prop]: event.target.value });
     };
 
-    const handleLogin = async (e: { preventDefault: () => void; }) => {
+    const handleLogin = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        try {
-            await auth.signin({ email: values.email, password: values.password })
-            setSnackbarState({ status: true, message: "login success", severity: "success" })
-            history.replace(from)
-        } catch (error) {
-            setSnackbarState({ status: true, message: error.message, severity: "error" })
-            throw error
-        }
+        auth.signin({ email: values.email, password: values.password }, () => history.replace(from))
     }
 
     return (

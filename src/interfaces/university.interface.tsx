@@ -4,5 +4,6 @@ export interface UniversityInterface {
   domains: string[];
   name: string;
   web_pages: string[];
+  isFavorite?: boolean
   ['state-province']?: string;
 }

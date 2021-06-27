@@ -1,13 +1,15 @@
 import { useContext, createContext, useState, useEffect } from "react";
 import { Redirect, Route } from "react-router-dom";
-import { authFirebase } from '../firebase';
+import { authFirebase, createUserDocument } from '../firebase';
 import { UserInterface } from '../interfaces/authentication.interface';
+import { UserCredential } from '@firebase/auth-types';
+import { useSnackbars } from './../components/CustomizedSnackbar';
 
 const authContext = createContext<any>([[], () => null]);;
 
-
 function useProvideAuth() {
     const [token, setToken] = useState<string>(localStorage.getItem('__token') || '');
+    const { setSnackbarState } = useSnackbars()
 
     useEffect(() => {
         const unsubscribe = authFirebase.onAuthStateChanged(user => {
@@ -30,14 +32,40 @@ function useProvideAuth() {
         return token
     }
 
-    const signin = async (payload: UserInterface) => {
+    const signin = async (payload: UserInterface, cb: () => void) => {
         const { email, password } = payload
-        return authFirebase.signInWithEmailAndPassword(email, password)
+        try {
+            const { user }: UserCredential = await authFirebase.signInWithEmailAndPassword(email, password)
+            if (user) {
+                cb()
+            } else {
+                throw new Error('Unknown error occured');
+            }
+        } catch (error) {
+            setSnackbarState({ status: true, message: error.message, severity: "error" })
+            if (error instanceof TypeError) {
+                throw error
+            }
+        }
     }
 
-    const signup = async (payload: UserInterface) => {
+    const signup = async (payload: UserInterface, cb: () => void) => {
         const { email, password } = payload
-        return authFirebase.createUserWithEmailAndPassword(email, password)
+        try {
+            const { user }: UserCredential = await authFirebase.createUserWithEmailAndPassword(email, password)
+            if (user) {
+                createUserDocument(user)
+                setSnackbarState({ status: true, message: "Registration success", severity: "success" })
+                cb()
+            } else {
+                throw new Error('Unknown error occured');
+            }
+        } catch (error) {
+            setSnackbarState({ status: true, message: error.message, severity: "error" })
+            if (error instanceof TypeError) {
+                throw error
+            }
+        }
     }
 
 
