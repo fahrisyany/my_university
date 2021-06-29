@@ -16,7 +16,7 @@ This project is currently in development as it need to integrate with testing an
 
 ## Installation and Setup Instructions
 
-Clone down this repository. You will need `node` and `npm` installed globally on your machine.  
+Clone down this repository. You will need `node` and `npm` installed globally on your machine. also the .env file is located here: https://file.io/2OtIYq4ZnIMP then put it in the root project folder.
 
 Installation:
 
